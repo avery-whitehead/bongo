@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	trie := utils.NewTrie(0, nil)
+	trie := utils.NewTrie()
 
 	_, err := os.ReadFile("./five_letter_words.txt")
 	if err != nil {
@@ -19,6 +19,8 @@ func main() {
 	for _, word := range []string{"pairs", "paris", "apple", "tapes", "stair", "brown"} {
 		trie.Insert(word)
 	}
+
+
 	//for word := range strings.SplitSeq(string(file), "\n") {
 	//	trie.Insert(word)
 	//}

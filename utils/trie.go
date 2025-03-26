@@ -2,48 +2,54 @@ package utils
 
 type Trie struct {
 	Parent *Trie
-	Value rune
 	Children map[rune]*Trie
+	Value rune
 	IsEnd bool
 }
 
-func NewTrie(value rune, parent *Trie) *Trie {
-	return &Trie { Value: value, Parent: parent, Children: make(map[rune]*Trie) }
+func NewTrie() *Trie {
+	return &Trie{ Parent: nil, Children: make(map[rune]*Trie), IsEnd: false }
 }
 
 func (trie *Trie) Insert(word string) {
+	node := trie
 	for _, char := range word {
-		if _, ok := trie.Children[char]; !ok {
-			trie.Children[char] = NewTrie(char, trie)
-		} else {
-			trie = trie.Children[char]
+		child := node.Children[char]
+		if child == nil {
+			if node.Children == nil {
+				node.Children = make(map[rune]*Trie)
+			}
+			child = new(Trie)
+			node.Children[char] = child
 		}
+		child.Parent = node
+		node = child
+		node.Value = char
 	}
-	trie.IsEnd = true
+	node.IsEnd = true
 }
 
 func (trie *Trie) GetWord() string {
 	if trie.Parent == nil {
 		return string(trie.Value)
 	}
-	
+
 	return trie.Parent.GetWord() + string(trie.Value)
 }
 
 func (trie *Trie) FindWords(letters []rune) []string {
-	var results []string
+	results := make([]string, 0)
 
 	if trie.IsEnd {
 		results = append(results, trie.GetWord())
 	}
 
 	for _, letter := range letters {
-		if _, ok := trie.Children[letter]; ok {
-			//letterRemoved := slices.Delete(letters, i, i + 1)
-			//results = append(results, trie.Children[letter].FindWords(letterRemoved)...)
-			results = append(results, trie.Children[letter].FindWords((letters))...)
+		if trie.Children[letter] != nil {
+			results = append(results, trie.Children[letter].FindWords(letters)...)
 		}
 	}
+
 
 	return results
 }
