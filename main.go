@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	trie := utils.NewTrie()
+	trie := utils.NewTrie(0)
 
 	_, err := os.ReadFile("./five_letter_words.txt")
 	if err != nil {

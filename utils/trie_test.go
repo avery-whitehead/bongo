@@ -6,7 +6,7 @@ import (
 )
 
 func TestInsert(t *testing.T) {
-	trie := NewTrie()
+	trie := NewTrie(0)
 
 	trie.Insert("abc")
 	a := trie.Children[97]
@@ -19,7 +19,7 @@ func TestInsert(t *testing.T) {
 }
 
 func TestFindWords(t *testing.T) {
-	trie := NewTrie()
+	trie := NewTrie(0)
 	test_words := []string{ "apple", "tries", "pairs", "paris", "steps", "muddy" }
 	test_letters := []rune {'a', 'e', 'i', 'p', 'r', 's', 't'}
 	expected_words := []string { "pairs", "paris", "steps", "tries" }
