@@ -20,7 +20,6 @@ func main() {
 		trie.Insert(word)
 	}
 
-
 	//for word := range strings.SplitSeq(string(file), "\n") {
 	//	trie.Insert(word)
 	//}

@@ -31,7 +31,7 @@ func (trie *Trie) Insert(word string) {
 
 func (trie *Trie) GetWord() string {
 	if trie.Parent == nil {
-		return string(trie.Value)
+		return ""
 	}
 
 	return trie.Parent.GetWord() + string(trie.Value)
