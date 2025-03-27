@@ -8,13 +8,13 @@ type TrieNode struct {
 	// Map of child nodes keyed by their character, nil if node does not exist
 	Children map[rune]*TrieNode
 	// Value of this node
-	Value rune
+	Value string
 	// True if this node marks the end of a word
 	IsEnd bool
 }
 
 // Creates a new node
-func NewTrie(value rune) *TrieNode {
+func NewTrie(value string) *TrieNode {
 	return &TrieNode{ Value: value, Children: make(map[rune]*TrieNode) }
 }
 
@@ -25,7 +25,7 @@ func (node *TrieNode) Insert(word string) {
 		// If this character does not exist as a child of this node, create
 		// the node and add it to this node's children, keyed by the character
 		if child == nil {
-			child = NewTrie(char)
+			child = NewTrie(node.Value + string(char))
 			node.Children[char] = child
 		}
 		// Set the parent of the child node to this node
@@ -38,24 +38,13 @@ func (node *TrieNode) Insert(word string) {
 	node.IsEnd = true
 }
 
-// Traverses from a node back through its parents and builds the
-// string represented by that path
-func (node *TrieNode) GetWord() string {
-	// Terminate once we've reached the root node
-	if node.Parent == nil {
-		return ""
-	}
-
-	return node.Parent.GetWord() + string(node.Value)
-}
-
 // Given a set of letters, find all the words in the trie that can be
 // made from those 
 func (node *TrieNode) FindWords(letters []rune) []string {
 	results := make([]string, 0)
 
 	if node.IsEnd {
-		results = append(results, node.GetWord())
+		results = append(results, node.Value)
 	}
 
 	for _, letter := range letters {

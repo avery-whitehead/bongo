@@ -4,30 +4,27 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/avery-whitehead/bongo/utils"
 )
 
 func main() {
-	trie := utils.NewTrie(0)
+	trie := utils.NewTrie("")
 
-	_, err := os.ReadFile("./five_letter_words.txt")
+	file, err := os.ReadFile("./five_letter_words.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	for _, word := range []string{"pairs", "paris", "apple", "tapes", "stair", "brown"} {
+	for word := range strings.SplitSeq(string(file), "\n") {
 		trie.Insert(word)
 	}
 
-	//for word := range strings.SplitSeq(string(file), "\n") {
-	//	trie.Insert(word)
-	//}
-
 	words := trie.FindWords([]rune{'a', 'e', 'i', 'r', 'p', 't', 's'})
 	
-	for _, word := range words {
-		fmt.Println(word)
+	for i, word := range words {
+		fmt.Printf("%d: %s\n", i, word)
 	}
 }
 
