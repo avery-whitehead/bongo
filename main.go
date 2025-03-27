@@ -21,7 +21,7 @@ func main() {
 		trie.Insert(word)
 	}
 
-	words := trie.FindWords([]rune{'a', 'e', 'i', 'r', 'p', 't', 's'})
+	words := trie.FindWords([]rune{'z', 'e', 'b', 'r', 'a', 's'})
 	
 	for i, word := range words {
 		fmt.Printf("%d: %s\n", i, word)
